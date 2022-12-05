@@ -61,7 +61,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (15/15)
+    (16/16)
   </span>
 </td>
 </tr>
@@ -75,42 +75,47 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package oop.labs.lab1;
 <i class="no-highlight">2</i>&nbsp;
-<b class="fc"><i class="no-highlight">3</i>&nbsp;public class StringCalculator</b>
-<i class="no-highlight">4</i>&nbsp;{
-<i class="no-highlight">5</i>&nbsp;    public int add(String numbers) throws IllegalArgumentException
-<i class="no-highlight">6</i>&nbsp;    {
-<b class="fc"><i class="no-highlight">7</i>&nbsp;        if (numbers.length() == 0) return 0;</b>
-<i class="no-highlight">8</i>&nbsp;
-<i class="no-highlight">9</i>&nbsp;        try
-<i class="no-highlight">10</i>&nbsp;        {
-<b class="fc"><i class="no-highlight">11</i>&nbsp;            var i = 0;</b>
-<b class="fc"><i class="no-highlight">12</i>&nbsp;            var sum = 0;</b>
-<b class="fc"><i class="no-highlight">13</i>&nbsp;            var border = 0;</b>
-<i class="no-highlight">14</i>&nbsp;
-<b class="fc"><i class="no-highlight">15</i>&nbsp;            while (i &lt; numbers.length())</b>
-<i class="no-highlight">16</i>&nbsp;            {
-<b class="fc"><i class="no-highlight">17</i>&nbsp;                while (i &lt; numbers.length() &amp;&amp; numbers.charAt(i) != &#39;,&#39;) i++;</b>
-<i class="no-highlight">18</i>&nbsp;
-<b class="fc"><i class="no-highlight">19</i>&nbsp;                if (i &gt; 0 &amp;&amp; i != numbers.length() - 1)</b>
-<i class="no-highlight">20</i>&nbsp;                {
-<b class="fc"><i class="no-highlight">21</i>&nbsp;                    sum += Integer.parseInt(numbers, border, i, 10);</b>
-<b class="fc"><i class="no-highlight">22</i>&nbsp;                    i++;</b>
-<b class="fc"><i class="no-highlight">23</i>&nbsp;                    border = i;</b>
-<i class="no-highlight">24</i>&nbsp;                }
-<i class="no-highlight">25</i>&nbsp;                else
-<i class="no-highlight">26</i>&nbsp;                {
-<b class="fc"><i class="no-highlight">27</i>&nbsp;                    throw new IndexOutOfBoundsException();</b>
-<i class="no-highlight">28</i>&nbsp;                }
-<i class="no-highlight">29</i>&nbsp;            }
-<i class="no-highlight">30</i>&nbsp;
-<b class="fc"><i class="no-highlight">31</i>&nbsp;            return sum;</b>
-<i class="no-highlight">32</i>&nbsp;        }
-<b class="fc"><i class="no-highlight">33</i>&nbsp;        catch (IndexOutOfBoundsException | NumberFormatException ex)</b>
-<i class="no-highlight">34</i>&nbsp;        {
-<b class="fc"><i class="no-highlight">35</i>&nbsp;            throw new IllegalArgumentException(&quot;Incorrect input format.&quot;);</b>
-<i class="no-highlight">36</i>&nbsp;        }
-<i class="no-highlight">37</i>&nbsp;    }
-<i class="no-highlight">38</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import java.util.Arrays;
+<i class="no-highlight">4</i>&nbsp;import java.util.HashSet;
+<i class="no-highlight">5</i>&nbsp;
+<b class="fc"><i class="no-highlight">6</i>&nbsp;public class StringCalculator</b>
+<i class="no-highlight">7</i>&nbsp;{
+<i class="no-highlight">8</i>&nbsp;    public int add(String numbers) throws IllegalArgumentException
+<i class="no-highlight">9</i>&nbsp;    {
+<b class="fc"><i class="no-highlight">10</i>&nbsp;        if (numbers.length() == 0) return 0;</b>
+<i class="no-highlight">11</i>&nbsp;
+<b class="fc"><i class="no-highlight">12</i>&nbsp;        var delimiters = new HashSet&lt;&gt;(Arrays.asList(&#39;,&#39;, &#39;\n&#39;));</b>
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;        try
+<i class="no-highlight">15</i>&nbsp;        {
+<b class="fc"><i class="no-highlight">16</i>&nbsp;            var i = 0;</b>
+<b class="fc"><i class="no-highlight">17</i>&nbsp;            var sum = 0;</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;            var border = 0;</b>
+<i class="no-highlight">19</i>&nbsp;
+<b class="fc"><i class="no-highlight">20</i>&nbsp;            while (i &lt; numbers.length())</b>
+<i class="no-highlight">21</i>&nbsp;            {
+<b class="fc"><i class="no-highlight">22</i>&nbsp;                while (i &lt; numbers.length() &amp;&amp; !delimiters.contains(numbers.charAt(i))) i++;</b>
+<i class="no-highlight">23</i>&nbsp;
+<b class="fc"><i class="no-highlight">24</i>&nbsp;                if (i &gt; 0 &amp;&amp; i != numbers.length() - 1)</b>
+<i class="no-highlight">25</i>&nbsp;                {
+<b class="fc"><i class="no-highlight">26</i>&nbsp;                    sum += Integer.parseInt(numbers, border, i, 10);</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;                    i++;</b>
+<b class="fc"><i class="no-highlight">28</i>&nbsp;                    border = i;</b>
+<i class="no-highlight">29</i>&nbsp;                }
+<i class="no-highlight">30</i>&nbsp;                else
+<i class="no-highlight">31</i>&nbsp;                {
+<b class="fc"><i class="no-highlight">32</i>&nbsp;                    throw new IndexOutOfBoundsException();</b>
+<i class="no-highlight">33</i>&nbsp;                }
+<i class="no-highlight">34</i>&nbsp;            }
+<i class="no-highlight">35</i>&nbsp;
+<b class="fc"><i class="no-highlight">36</i>&nbsp;            return sum;</b>
+<i class="no-highlight">37</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        catch (IndexOutOfBoundsException | NumberFormatException ex)</b>
+<i class="no-highlight">39</i>&nbsp;        {
+<b class="fc"><i class="no-highlight">40</i>&nbsp;            throw new IllegalArgumentException(&quot;Incorrect input format.&quot;);</b>
+<i class="no-highlight">41</i>&nbsp;        }
+<i class="no-highlight">42</i>&nbsp;    }
+<i class="no-highlight">43</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -137,7 +142,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-12-06 00:59</div>
+    <div style="float:right;">generated on 2022-12-06 01:01</div>
 </div>
 </body>
 </html>

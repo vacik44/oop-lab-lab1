@@ -63,4 +63,27 @@ public class StringCalculatorTest
         assertThat(catchThrowable(() -> testCalculator.add("1\n\n"))).isInstanceOf(IllegalArgumentException.class);
         assertThat(catchThrowable(() -> testCalculator.add("1\n,"))).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    public void step_4_basic()
+    {
+        assertThat(testCalculator.add("//;\n")).isEqualTo(0);
+        assertThat(testCalculator.add("//;\n11")).isEqualTo(11);
+        assertThat(testCalculator.add("//;\n1;2")).isEqualTo(3);
+        assertThat(testCalculator.add("//,\n1,2")).isEqualTo(3);
+        assertThat(testCalculator.add("//\n\n1\n2")).isEqualTo(3);
+        assertThat(testCalculator.add("//$\n11$22")).isEqualTo(33);
+        assertThat(testCalculator.add("//$\n1$2,3$4")).isEqualTo(10);
+        assertThat(testCalculator.add("//%\n11\n22%33")).isEqualTo(66);
+        assertThat(testCalculator.add("//%\n11%22%33%44")).isEqualTo(110);
+    }
+
+    @Test
+    public void step_4_extended()
+    {
+        assertThat(catchThrowable(() -> testCalculator.add("//\n1"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//;\n1*2"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//;\n;1;2"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//;;\n1;2"))).isInstanceOf(IllegalArgumentException.class);
+    }
 }

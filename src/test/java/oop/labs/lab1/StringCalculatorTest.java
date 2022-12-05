@@ -35,4 +35,11 @@ public class StringCalculatorTest
         assertThat(catchThrowable(() -> testCalculator.add("1,"))).isInstanceOf(IllegalArgumentException.class);
         assertThat(catchThrowable(() -> testCalculator.add("1,,"))).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    public void step_2()
+    {
+        assertThat(testCalculator.add("1,2,3,4")).isEqualTo(10);
+        assertThat(testCalculator.add("11,22,33")).isEqualTo(66);
+    }
 }

@@ -6,18 +6,33 @@ public class StringCalculator
     {
         if (numbers.length() == 0) return 0;
 
-        var i = 0;
-        while (i < numbers.length() && numbers.charAt(i) != ',') i ++;
+        try
+        {
+            var i = 0;
+            var sum = 0;
+            var border = 0;
 
-        if (i > 0 && i != numbers.length() - 1)
-            try
+            while (i < numbers.length())
             {
-                var sum = Integer.parseInt(numbers, 0, i, 10);
-                if (i < numbers.length()) sum += Integer.parseInt(numbers, i + 1, numbers.length(), 10);
-                return sum;
-            }
-            catch (NumberFormatException | IndexOutOfBoundsException ignored) {}
+                while (i < numbers.length() && numbers.charAt(i) != ',') i++;
 
-        throw new IllegalArgumentException("Incorrect input format.");
+                if (i > 0 && i != numbers.length() - 1)
+                {
+                    sum += Integer.parseInt(numbers, border, i, 10);
+                    i++;
+                    border = i;
+                }
+                else
+                {
+                    throw new IndexOutOfBoundsException();
+                }
+            }
+
+            return sum;
+        }
+        catch (IndexOutOfBoundsException | NumberFormatException ex)
+        {
+            throw new IllegalArgumentException("Incorrect input format.");
+        }
     }
 }

@@ -10,12 +10,12 @@ public class StringCalculator
     {
         if (numbers.length() == 0) return 0;
 
-        var delimiters = new HashSet<>(Arrays.asList(",", "\n"));
-        var rethrow = false;
+        HashSet<String> delimiters = new HashSet<>(Arrays.asList(",", "\n"));
+        boolean rethrow = false;
 
         try
         {
-            var i = 0;
+            int i = 0;
             int border;
 
             if (numbers.startsWith("//"))
@@ -49,21 +49,21 @@ public class StringCalculator
             }
 
             border = i;
-            var start = border;
+            int start = border;
 
-            var sum = 0;
-            var negatives = new ArrayList<Integer>();
+            int sum = 0;
+            ArrayList<Integer> negatives = new ArrayList<>();
 
             while (i < numbers.length())
             {
-                var c = numbers.charAt(i);
+                char c = numbers.charAt(i);
 
                 if (Character.isDigit(c) || c == '-')
                 {
                     if (c == '-') i++;
                     while (i < numbers.length() && Character.isDigit(numbers.charAt(i))) i++;
 
-                    var num = Integer.parseInt(numbers, border, i, 10);
+                    int num = Integer.parseInt(numbers, border, i, 10);
 
                     if (num < 0) negatives.add(num);
                     if (negatives.isEmpty() && num <= 1000) sum += num;

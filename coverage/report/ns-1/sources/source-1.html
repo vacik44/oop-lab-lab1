@@ -85,12 +85,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">10</i>&nbsp;    {
 <b class="fc"><i class="no-highlight">11</i>&nbsp;        if (numbers.length() == 0) return 0;</b>
 <i class="no-highlight">12</i>&nbsp;
-<b class="fc"><i class="no-highlight">13</i>&nbsp;        var delimiters = new HashSet&lt;&gt;(Arrays.asList(&quot;,&quot;, &quot;\n&quot;));</b>
-<b class="fc"><i class="no-highlight">14</i>&nbsp;        var rethrow = false;</b>
+<b class="fc"><i class="no-highlight">13</i>&nbsp;        HashSet&lt;String&gt; delimiters = new HashSet&lt;&gt;(Arrays.asList(&quot;,&quot;, &quot;\n&quot;));</b>
+<b class="fc"><i class="no-highlight">14</i>&nbsp;        boolean rethrow = false;</b>
 <i class="no-highlight">15</i>&nbsp;
 <i class="no-highlight">16</i>&nbsp;        try
 <i class="no-highlight">17</i>&nbsp;        {
-<b class="fc"><i class="no-highlight">18</i>&nbsp;            var i = 0;</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;            int i = 0;</b>
 <i class="no-highlight">19</i>&nbsp;            int border;
 <i class="no-highlight">20</i>&nbsp;
 <b class="fc"><i class="no-highlight">21</i>&nbsp;            if (numbers.startsWith(&quot;//&quot;))</b>
@@ -124,21 +124,21 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">49</i>&nbsp;            }
 <i class="no-highlight">50</i>&nbsp;
 <b class="fc"><i class="no-highlight">51</i>&nbsp;            border = i;</b>
-<b class="fc"><i class="no-highlight">52</i>&nbsp;            var start = border;</b>
+<b class="fc"><i class="no-highlight">52</i>&nbsp;            int start = border;</b>
 <i class="no-highlight">53</i>&nbsp;
-<b class="fc"><i class="no-highlight">54</i>&nbsp;            var sum = 0;</b>
-<b class="fc"><i class="no-highlight">55</i>&nbsp;            var negatives = new ArrayList&lt;Integer&gt;();</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;            int sum = 0;</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;            ArrayList&lt;Integer&gt; negatives = new ArrayList&lt;&gt;();</b>
 <i class="no-highlight">56</i>&nbsp;
 <b class="fc"><i class="no-highlight">57</i>&nbsp;            while (i &lt; numbers.length())</b>
 <i class="no-highlight">58</i>&nbsp;            {
-<b class="fc"><i class="no-highlight">59</i>&nbsp;                var c = numbers.charAt(i);</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;                char c = numbers.charAt(i);</b>
 <i class="no-highlight">60</i>&nbsp;
 <b class="fc"><i class="no-highlight">61</i>&nbsp;                if (Character.isDigit(c) || c == &#39;-&#39;)</b>
 <i class="no-highlight">62</i>&nbsp;                {
 <b class="fc"><i class="no-highlight">63</i>&nbsp;                    if (c == &#39;-&#39;) i++;</b>
 <b class="fc"><i class="no-highlight">64</i>&nbsp;                    while (i &lt; numbers.length() &amp;&amp; Character.isDigit(numbers.charAt(i))) i++;</b>
 <i class="no-highlight">65</i>&nbsp;
-<b class="fc"><i class="no-highlight">66</i>&nbsp;                    var num = Integer.parseInt(numbers, border, i, 10);</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;                    int num = Integer.parseInt(numbers, border, i, 10);</b>
 <i class="no-highlight">67</i>&nbsp;
 <b class="fc"><i class="no-highlight">68</i>&nbsp;                    if (num &lt; 0) negatives.add(num);</b>
 <b class="fc"><i class="no-highlight">69</i>&nbsp;                    if (negatives.isEmpty() &amp;&amp; num &lt;= 1000) sum += num;</b>
@@ -192,7 +192,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-12-06 03:45</div>
+    <div style="float:right;">generated on 2022-12-06 03:55</div>
 </div>
 </body>
 </html>

@@ -144,4 +144,18 @@ public class StringCalculatorTest
         assertThat(catchThrowable(() -> testCalculator.add("//[***]\n1**2"))).isInstanceOf(IllegalArgumentException.class);
         assertThat(catchThrowable(() -> testCalculator.add("//[***]\n1****2"))).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    public void step_8()
+    {
+        assertThat(testCalculator.add("//[+][*]\n1*2+3,4")).isEqualTo(10);
+        assertThat(testCalculator.add("//[+][*]\n11*22+33*44")).isEqualTo(110);
+        assertThat(testCalculator.add("//[+][*][/]\n11\n22+33*44/55")).isEqualTo(165);
+    }
+
+    @Test
+    public void step_9()
+    {
+        assertThat(testCalculator.add("//[***][*++][++][+][*]\n1*++2***3++4*5+6\n7,8")).isEqualTo(36);
+    }
 }

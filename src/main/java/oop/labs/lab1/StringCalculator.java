@@ -16,16 +16,26 @@ public class StringCalculator
         try
         {
             var i = 0;
+            int border;
 
             if (numbers.startsWith("//"))
             {
                 if (numbers.charAt(2) == '[')
                 {
-                    while (i < numbers.length() && numbers.charAt(i) != ']') i++;
-                    if (numbers.charAt(i + 1) != '\n') throw new IllegalArgumentException();
+                    i = 2;
+                    border = i + 1;
 
-                    delimiters.add(numbers.substring(3, i));
-                    i += 2;
+                    while (numbers.charAt(i) == '[')
+                    {
+                        while (i < numbers.length() && numbers.charAt(i) != ']') i++;
+
+                        delimiters.add(numbers.substring(border, i));
+                        i++;
+                        border = i + 1;
+                    }
+
+                    if (numbers.charAt(i) != '\n') throw new IllegalArgumentException();
+                    i++;
                 }
                 else
                 {
@@ -38,9 +48,10 @@ public class StringCalculator
                 if (numbers.length() == i) return 0;
             }
 
-            var sum = 0;
-            var border = i;
+            border = i;
             var start = border;
+
+            var sum = 0;
             var negatives = new ArrayList<Integer>();
 
             while (i < numbers.length())

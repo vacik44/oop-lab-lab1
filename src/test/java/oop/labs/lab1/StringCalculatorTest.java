@@ -3,6 +3,9 @@ package oop.labs.lab1;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -85,5 +88,23 @@ public class StringCalculatorTest
         assertThat(catchThrowable(() -> testCalculator.add("//;\n1*2"))).isInstanceOf(IllegalArgumentException.class);
         assertThat(catchThrowable(() -> testCalculator.add("//;\n;1;2"))).isInstanceOf(IllegalArgumentException.class);
         assertThat(catchThrowable(() -> testCalculator.add("//;;\n1;2"))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void step_5_basic()
+    {
+        assertThat(catchThrowable(() -> testCalculator.add("-1,2,3"))).hasMessage(String.format("Negatives not allowed (%s found).", List.of(-1)));
+        assertThat(catchThrowable(() -> testCalculator.add("1,-2,3"))).hasMessage(String.format("Negatives not allowed (%s found).", List.of(-2)));
+        assertThat(catchThrowable(() -> testCalculator.add("1,-2,-3"))).hasMessage(String.format("Negatives not allowed (%s found).", Arrays.asList(-2, -3)));
+        assertThat(catchThrowable(() -> testCalculator.add("-1,-2,-3"))).hasMessage(String.format("Negatives not allowed (%s found).", Arrays.asList(-1, -2, -3)));
+        assertThat(catchThrowable(() -> testCalculator.add("-11,-22,-33"))).hasMessage(String.format("Negatives not allowed (%s found).", Arrays.asList(-11, -22, -33)));
+    }
+
+    @Test
+    public void step_5_extended()
+    {
+        assertThat(catchThrowable(() -> testCalculator.add("//;\n-11;-22;-33"))).hasMessage(String.format("Negatives not allowed (%s found).", Arrays.asList(-11, -22, -33)));
+        assertThat(catchThrowable(() -> testCalculator.add("//;\n11;-22\n33,-44"))).hasMessage(String.format("Negatives not allowed (%s found).", Arrays.asList(-22, -44)));
+        assertThat(catchThrowable(() -> testCalculator.add("//;\n11;-22\n33,-44\n"))).hasMessage("Incorrect input format.");
     }
 }

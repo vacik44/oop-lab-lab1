@@ -1,5 +1,6 @@
 package oop.labs.lab1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -10,6 +11,7 @@ public class StringCalculator
         if (numbers.length() == 0) return 0;
 
         var delimiters = new HashSet<>(Arrays.asList(',', '\n'));
+        var rethrow = false;
 
         try
         {
@@ -27,6 +29,7 @@ public class StringCalculator
             var sum = 0;
             var border = i;
             var start = border;
+            var negatives = new ArrayList<Integer>();
 
             while (i < numbers.length())
             {
@@ -34,7 +37,11 @@ public class StringCalculator
 
                 if (i > start && i != numbers.length() - 1)
                 {
-                    sum += Integer.parseInt(numbers, border, i, 10);
+                    var num = Integer.parseInt(numbers, border, i, 10);
+
+                    if (num < 0) negatives.add(num);
+                    if (negatives.isEmpty()) sum += num;
+
                     i++;
                     border = i;
                 }
@@ -44,10 +51,14 @@ public class StringCalculator
                 }
             }
 
-            return sum;
+            if (negatives.isEmpty()) return sum;
+
+            rethrow = true;
+            throw new IllegalArgumentException(String.format("Negatives not allowed (%s found).", negatives));
         }
         catch (IndexOutOfBoundsException | IllegalArgumentException ex)
         {
+            if (rethrow) throw ex;
             throw new IllegalArgumentException("Incorrect input format.");
         }
     }

@@ -10,7 +10,7 @@ public class StringCalculator
     {
         if (numbers.length() == 0) return 0;
 
-        var delimiters = new HashSet<>(Arrays.asList(',', '\n'));
+        var delimiters = new HashSet<>(Arrays.asList(",", "\n"));
         var rethrow = false;
 
         try
@@ -18,13 +18,25 @@ public class StringCalculator
             var i = 0;
 
             if (numbers.startsWith("//"))
-                if (numbers.length() < 4 || numbers.charAt(3) != '\n') throw new IllegalArgumentException();
-                else if (numbers.length() == 4) return 0;
+            {
+                if (numbers.charAt(2) == '[')
+                {
+                    while (i < numbers.length() && numbers.charAt(i) != ']') i++;
+                    if (numbers.charAt(i + 1) != '\n') throw new IllegalArgumentException();
+
+                    delimiters.add(numbers.substring(3, i));
+                    i += 2;
+                }
                 else
                 {
-                    delimiters.add(numbers.charAt(2));
+                    if (numbers.length() < 4 || numbers.charAt(3) != '\n') throw new IllegalArgumentException();
+
+                    delimiters.add(numbers.substring(2, 3));
                     i = 4;
                 }
+
+                if (numbers.length() == i) return 0;
+            }
 
             var sum = 0;
             var border = i;
@@ -33,22 +45,27 @@ public class StringCalculator
 
             while (i < numbers.length())
             {
-                while (i < numbers.length() && !delimiters.contains(numbers.charAt(i))) i++;
+                var c = numbers.charAt(i);
 
-                if (i > start && i != numbers.length() - 1)
+                if (Character.isDigit(c) || c == '-')
                 {
+                    if (c == '-') i++;
+                    while (i < numbers.length() && Character.isDigit(numbers.charAt(i))) i++;
+
                     var num = Integer.parseInt(numbers, border, i, 10);
 
                     if (num < 0) negatives.add(num);
                     if (negatives.isEmpty() && num <= 1000) sum += num;
-
-                    i++;
-                    border = i;
                 }
                 else
                 {
-                    throw new IndexOutOfBoundsException();
+                    while (i < numbers.length() && (c = numbers.charAt(i)) != '-' && !Character.isDigit(c)) i++;
+
+                    if (border == start || i == numbers.length()) throw new IndexOutOfBoundsException();
+                    if (!delimiters.contains(numbers.substring(border, i))) throw new IllegalArgumentException();
                 }
+
+                border = i;
             }
 
             if (negatives.isEmpty()) return sum;

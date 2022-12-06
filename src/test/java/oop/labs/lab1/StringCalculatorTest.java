@@ -115,4 +115,33 @@ public class StringCalculatorTest
         assertThat(testCalculator.add("1001,1000,999")).isEqualTo(1999);
         assertThat(testCalculator.add("1001,999,20000")).isEqualTo(999);
     }
+
+    @Test
+    public void step_7_basic()
+    {
+        assertThat(testCalculator.add("//[*]\n")).isEqualTo(0);
+        assertThat(testCalculator.add("//[*]\n1*2*3")).isEqualTo(6);
+        assertThat(testCalculator.add("//[*]\n1*2,3")).isEqualTo(6);
+        assertThat(testCalculator.add("//[*]\n11*22*33")).isEqualTo(66);
+        assertThat(testCalculator.add("//[*]\n11\n22*33")).isEqualTo(66);
+        assertThat(testCalculator.add("//[***]\n11***22***33")).isEqualTo(66);
+        assertThat(testCalculator.add("//[***]\n11***22***33")).isEqualTo(66);
+    }
+
+    @Test
+    public void step_7_extended()
+    {
+        assertThat(catchThrowable(() -> testCalculator.add("//[***\n"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***];\n"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]1,2"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]\n,"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]\n,1"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]\n1,"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]\n***"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]1***2"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]\n***1"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]\n1***"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]\n1**2"))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(catchThrowable(() -> testCalculator.add("//[***]\n1****2"))).isInstanceOf(IllegalArgumentException.class);
+    }
 }

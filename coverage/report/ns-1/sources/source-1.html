@@ -61,7 +61,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (30/30)
+    (39/39)
   </span>
 </td>
 </tr>
@@ -85,7 +85,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">10</i>&nbsp;    {
 <b class="fc"><i class="no-highlight">11</i>&nbsp;        if (numbers.length() == 0) return 0;</b>
 <i class="no-highlight">12</i>&nbsp;
-<b class="fc"><i class="no-highlight">13</i>&nbsp;        var delimiters = new HashSet&lt;&gt;(Arrays.asList(&#39;,&#39;, &#39;\n&#39;));</b>
+<b class="fc"><i class="no-highlight">13</i>&nbsp;        var delimiters = new HashSet&lt;&gt;(Arrays.asList(&quot;,&quot;, &quot;\n&quot;));</b>
 <b class="fc"><i class="no-highlight">14</i>&nbsp;        var rethrow = false;</b>
 <i class="no-highlight">15</i>&nbsp;
 <i class="no-highlight">16</i>&nbsp;        try
@@ -93,51 +93,68 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc"><i class="no-highlight">18</i>&nbsp;            var i = 0;</b>
 <i class="no-highlight">19</i>&nbsp;
 <b class="fc"><i class="no-highlight">20</i>&nbsp;            if (numbers.startsWith(&quot;//&quot;))</b>
-<b class="fc"><i class="no-highlight">21</i>&nbsp;                if (numbers.length() &lt; 4 || numbers.charAt(3) != &#39;\n&#39;) throw new IllegalArgumentException();</b>
-<b class="fc"><i class="no-highlight">22</i>&nbsp;                else if (numbers.length() == 4) return 0;</b>
-<i class="no-highlight">23</i>&nbsp;                else
-<i class="no-highlight">24</i>&nbsp;                {
-<b class="fc"><i class="no-highlight">25</i>&nbsp;                    delimiters.add(numbers.charAt(2));</b>
-<b class="fc"><i class="no-highlight">26</i>&nbsp;                    i = 4;</b>
-<i class="no-highlight">27</i>&nbsp;                }
-<i class="no-highlight">28</i>&nbsp;
-<b class="fc"><i class="no-highlight">29</i>&nbsp;            var sum = 0;</b>
-<b class="fc"><i class="no-highlight">30</i>&nbsp;            var border = i;</b>
-<b class="fc"><i class="no-highlight">31</i>&nbsp;            var start = border;</b>
-<b class="fc"><i class="no-highlight">32</i>&nbsp;            var negatives = new ArrayList&lt;Integer&gt;();</b>
+<i class="no-highlight">21</i>&nbsp;            {
+<b class="fc"><i class="no-highlight">22</i>&nbsp;                if (numbers.charAt(2) == &#39;[&#39;)</b>
+<i class="no-highlight">23</i>&nbsp;                {
+<b class="fc"><i class="no-highlight">24</i>&nbsp;                    while (i &lt; numbers.length() &amp;&amp; numbers.charAt(i) != &#39;]&#39;) i++;</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;                    if (numbers.charAt(i + 1) != &#39;\n&#39;) throw new IllegalArgumentException();</b>
+<i class="no-highlight">26</i>&nbsp;
+<b class="fc"><i class="no-highlight">27</i>&nbsp;                    delimiters.add(numbers.substring(3, i));</b>
+<b class="fc"><i class="no-highlight">28</i>&nbsp;                    i += 2;</b>
+<i class="no-highlight">29</i>&nbsp;                }
+<i class="no-highlight">30</i>&nbsp;                else
+<i class="no-highlight">31</i>&nbsp;                {
+<b class="fc"><i class="no-highlight">32</i>&nbsp;                    if (numbers.length() &lt; 4 || numbers.charAt(3) != &#39;\n&#39;) throw new IllegalArgumentException();</b>
 <i class="no-highlight">33</i>&nbsp;
-<b class="fc"><i class="no-highlight">34</i>&nbsp;            while (i &lt; numbers.length())</b>
-<i class="no-highlight">35</i>&nbsp;            {
-<b class="fc"><i class="no-highlight">36</i>&nbsp;                while (i &lt; numbers.length() &amp;&amp; !delimiters.contains(numbers.charAt(i))) i++;</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;                    delimiters.add(numbers.substring(2, 3));</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;                    i = 4;</b>
+<i class="no-highlight">36</i>&nbsp;                }
 <i class="no-highlight">37</i>&nbsp;
-<b class="fc"><i class="no-highlight">38</i>&nbsp;                if (i &gt; start &amp;&amp; i != numbers.length() - 1)</b>
-<i class="no-highlight">39</i>&nbsp;                {
-<b class="fc"><i class="no-highlight">40</i>&nbsp;                    var num = Integer.parseInt(numbers, border, i, 10);</b>
-<i class="no-highlight">41</i>&nbsp;
-<b class="fc"><i class="no-highlight">42</i>&nbsp;                    if (num &lt; 0) negatives.add(num);</b>
-<b class="fc"><i class="no-highlight">43</i>&nbsp;                    if (negatives.isEmpty() &amp;&amp; num &lt;= 1000) sum += num;</b>
-<i class="no-highlight">44</i>&nbsp;
-<b class="fc"><i class="no-highlight">45</i>&nbsp;                    i++;</b>
-<b class="fc"><i class="no-highlight">46</i>&nbsp;                    border = i;</b>
-<b class="fc"><i class="no-highlight">47</i>&nbsp;                }</b>
-<i class="no-highlight">48</i>&nbsp;                else
-<i class="no-highlight">49</i>&nbsp;                {
-<b class="fc"><i class="no-highlight">50</i>&nbsp;                    throw new IndexOutOfBoundsException();</b>
-<i class="no-highlight">51</i>&nbsp;                }
-<i class="no-highlight">52</i>&nbsp;            }
-<i class="no-highlight">53</i>&nbsp;
-<b class="fc"><i class="no-highlight">54</i>&nbsp;            if (negatives.isEmpty()) return sum;</b>
-<i class="no-highlight">55</i>&nbsp;
-<b class="fc"><i class="no-highlight">56</i>&nbsp;            rethrow = true;</b>
-<b class="fc"><i class="no-highlight">57</i>&nbsp;            throw new IllegalArgumentException(String.format(&quot;Negatives not allowed (%s found).&quot;, negatives));</b>
-<i class="no-highlight">58</i>&nbsp;        }
-<b class="fc"><i class="no-highlight">59</i>&nbsp;        catch (IndexOutOfBoundsException | IllegalArgumentException ex)</b>
-<i class="no-highlight">60</i>&nbsp;        {
-<b class="fc"><i class="no-highlight">61</i>&nbsp;            if (rethrow) throw ex;</b>
-<b class="fc"><i class="no-highlight">62</i>&nbsp;            throw new IllegalArgumentException(&quot;Incorrect input format.&quot;);</b>
-<i class="no-highlight">63</i>&nbsp;        }
-<i class="no-highlight">64</i>&nbsp;    }
-<i class="no-highlight">65</i>&nbsp;}
+<b class="fc"><i class="no-highlight">38</i>&nbsp;                if (numbers.length() == i) return 0;</b>
+<i class="no-highlight">39</i>&nbsp;            }
+<i class="no-highlight">40</i>&nbsp;
+<b class="fc"><i class="no-highlight">41</i>&nbsp;            var sum = 0;</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;            var border = i;</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;            var start = border;</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;            var negatives = new ArrayList&lt;Integer&gt;();</b>
+<i class="no-highlight">45</i>&nbsp;
+<b class="fc"><i class="no-highlight">46</i>&nbsp;            while (i &lt; numbers.length())</b>
+<i class="no-highlight">47</i>&nbsp;            {
+<b class="fc"><i class="no-highlight">48</i>&nbsp;                var c = numbers.charAt(i);</b>
+<i class="no-highlight">49</i>&nbsp;
+<b class="fc"><i class="no-highlight">50</i>&nbsp;                if (Character.isDigit(c) || c == &#39;-&#39;)</b>
+<i class="no-highlight">51</i>&nbsp;                {
+<b class="fc"><i class="no-highlight">52</i>&nbsp;                    if (c == &#39;-&#39;) i++;</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;                    while (i &lt; numbers.length() &amp;&amp; Character.isDigit(numbers.charAt(i))) i++;</b>
+<i class="no-highlight">54</i>&nbsp;
+<b class="fc"><i class="no-highlight">55</i>&nbsp;                    var num = Integer.parseInt(numbers, border, i, 10);</b>
+<i class="no-highlight">56</i>&nbsp;
+<b class="fc"><i class="no-highlight">57</i>&nbsp;                    if (num &lt; 0) negatives.add(num);</b>
+<b class="fc"><i class="no-highlight">58</i>&nbsp;                    if (negatives.isEmpty() &amp;&amp; num &lt;= 1000) sum += num;</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;                }</b>
+<i class="no-highlight">60</i>&nbsp;                else
+<i class="no-highlight">61</i>&nbsp;                {
+<b class="fc"><i class="no-highlight">62</i>&nbsp;                    while (i &lt; numbers.length() &amp;&amp; (c = numbers.charAt(i)) != &#39;-&#39; &amp;&amp; !Character.isDigit(c)) i++;</b>
+<i class="no-highlight">63</i>&nbsp;
+<b class="fc"><i class="no-highlight">64</i>&nbsp;                    if (border == start || i == numbers.length()) throw new IndexOutOfBoundsException();</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;                    if (!delimiters.contains(numbers.substring(border, i))) throw new IllegalArgumentException();</b>
+<i class="no-highlight">66</i>&nbsp;                }
+<i class="no-highlight">67</i>&nbsp;
+<b class="fc"><i class="no-highlight">68</i>&nbsp;                border = i;</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;            }</b>
+<i class="no-highlight">70</i>&nbsp;
+<b class="fc"><i class="no-highlight">71</i>&nbsp;            if (negatives.isEmpty()) return sum;</b>
+<i class="no-highlight">72</i>&nbsp;
+<b class="fc"><i class="no-highlight">73</i>&nbsp;            rethrow = true;</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;            throw new IllegalArgumentException(String.format(&quot;Negatives not allowed (%s found).&quot;, negatives));</b>
+<i class="no-highlight">75</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        catch (IndexOutOfBoundsException | IllegalArgumentException ex)</b>
+<i class="no-highlight">77</i>&nbsp;        {
+<b class="fc"><i class="no-highlight">78</i>&nbsp;            if (rethrow) throw ex;</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;            throw new IllegalArgumentException(&quot;Incorrect input format.&quot;);</b>
+<i class="no-highlight">80</i>&nbsp;        }
+<i class="no-highlight">81</i>&nbsp;    }
+<i class="no-highlight">82</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -164,7 +181,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-12-06 02:57</div>
+    <div style="float:right;">generated on 2022-12-06 03:25</div>
 </div>
 </body>
 </html>

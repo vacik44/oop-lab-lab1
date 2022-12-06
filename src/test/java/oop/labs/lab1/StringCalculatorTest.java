@@ -107,4 +107,12 @@ public class StringCalculatorTest
         assertThat(catchThrowable(() -> testCalculator.add("//;\n11;-22\n33,-44"))).hasMessage(String.format("Negatives not allowed (%s found).", Arrays.asList(-22, -44)));
         assertThat(catchThrowable(() -> testCalculator.add("//;\n11;-22\n33,-44\n"))).hasMessage("Incorrect input format.");
     }
+
+    @Test
+    public void step_6()
+    {
+        assertThat(testCalculator.add("999,1000,1001")).isEqualTo(1999);
+        assertThat(testCalculator.add("1001,1000,999")).isEqualTo(1999);
+        assertThat(testCalculator.add("1001,999,20000")).isEqualTo(999);
+    }
 }

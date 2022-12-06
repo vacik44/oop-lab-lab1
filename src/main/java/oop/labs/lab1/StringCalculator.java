@@ -40,7 +40,7 @@ public class StringCalculator
                     var num = Integer.parseInt(numbers, border, i, 10);
 
                     if (num < 0) negatives.add(num);
-                    if (negatives.isEmpty()) sum += num;
+                    if (negatives.isEmpty() && num <= 1000) sum += num;
 
                     i++;
                     border = i;
